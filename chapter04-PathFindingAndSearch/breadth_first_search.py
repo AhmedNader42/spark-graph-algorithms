@@ -3,7 +3,7 @@ from graphframes import *
 
 from pyspark.sql import SparkSession
 
-# Execution command : spark-submit --driver-memory 2g --executor-memory 6g --packages graphframes:graphframes:0.8.2-spark3.2-s_2.12 importing_data.py
+# spark-submit --driver-memory 2g --executor-memory 6g --packages graphframes:graphframes:0.8.2-spark3.2-s_2.12 breadth_first_search.py
 
 spark = (
     SparkSession.builder.master("local[1]")
@@ -57,8 +57,9 @@ g.vertices.filter("population > 100000 and population < 300000").sort(
 ).show()
 
 # Find the path from Den Haag to a medium-sized city
-from_expr = "id='Den Haag'"
-to_expr = "population > 100000 and population < 300000 and id <> 'Den Haag'"
+source_node_id = "Den Haag"
+from_expr = f"id='{source_node_id}'"
+to_expr = f"population > 100000 and population < 300000 and id <> '{source_node_id}'"
 result = g.bfs(from_expr, to_expr)
 
 columns = [column for column in result.columns if not column.startswith("e")]
