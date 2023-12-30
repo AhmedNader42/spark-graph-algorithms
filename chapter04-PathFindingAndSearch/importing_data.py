@@ -13,7 +13,7 @@ spark = (
 
 
 def create_transport_graph():
-    data_path = "/home/ahmed/Documents/books/Graph-Algorithms/0636920233145/data"
+    data_path = "../data"
 
     node_schema = StructType(
         [
