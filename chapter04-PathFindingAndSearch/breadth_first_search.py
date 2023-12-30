@@ -50,3 +50,16 @@ def create_transport_graph():
 
 
 g = create_transport_graph()
+
+# Filter on the cities with population between 100,000 and 300,000
+g.vertices.filter("population > 100000 and population < 300000").sort(
+    "population"
+).show()
+
+# Find the path from Den Haag to a medium-sized city
+from_expr = "id='Den Haag'"
+to_expr = "population > 100000 and population < 300000 and id <> 'Den Haag'"
+result = g.bfs(from_expr, to_expr)
+
+columns = [column for column in result.columns if not column.startswith("e")]
+result.select(columns).show(truncate=False)
